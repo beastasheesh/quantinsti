@@ -1,0 +1,97 @@
+<html>
+
+  <head>
+    <title>Pizza</title>
+    <link rel="stylesheet" href="client\css\styles.css">
+  </head>
+
+  <body ng-app="app">
+
+    <header ng-include="'client/header.html'"></header>
+
+    <div class="content" ng-controller="mainController">
+      <form method="get" name="forms" action="/client/cart.html">
+      <div>
+        Your Price<t></t><input name="price" readonly="readonly" value="{{total}}"/>
+      </div>
+
+      <div>
+        <fieldset>
+          <legend>Pizza Crust</legend>
+            <li ng-repeat="(key, value) in base">
+              <input type="radio" name="bases" ng-model="$parent.bases" ng-value="{{value}}"
+                ng-click="updatePriceCrust(value)" />{{key}} {{value | currency:"₹"}}<br>
+            </li>
+        </fieldset>
+      </div>
+
+      <div>
+        <fieldset>
+          <legend>Choose Toppings</legend>
+          <div>
+            <li ng-repeat="(key, value) in toppings">
+              <input type="checkbox" ng-disabled="tickedToppings>=3 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)"/>{{key}} {{value | currency:"₹"}}<br>
+            </li>
+          </div>
+        </fieldset>
+      </div>
+
+      <div>
+        <fieldset>
+          <legend>Choose Veggies</legend>
+          <li ng-repeat="(key, value) in veggies">
+            <input type="checkbox" ng-disabled="tickedVeggies>=5 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
+          </li>
+        </fieldset>
+      </div>
+
+      <div>
+        <fieldset>
+          <legend>Cheese</legend>
+          <li ng-repeat="(key, value) in cheese">
+            <input type="checkbox" ng-disabled="tickedCheese>=1 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
+          </li>
+        </fieldset>
+      </div>
+
+      <div>
+        <fieldset>
+          <legend>Sauces</legend>
+          <li ng-repeat="(key, value) in sauces">
+            <input type="checkbox" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
+          </li>
+        </fieldset>
+      </div>
+
+      <div>
+        <fieldset>
+          <legend>Sides and Desserts</legend>
+          <div>
+            <li ng-repeat="(key, value) in sides">
+              <input type="checkbox" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
+            </li>
+          </div>
+        </fieldset>
+      </div>
+
+      <div>
+        <fieldset>
+          <legend>Extras</legend>
+            <li style="" ng-repeat="(key, value) in extras">
+              <input type="checkbox" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
+            </li>
+        </fieldset>
+      </div>
+
+      <div class="finalButtons">
+        <input type="submit" class="finalBtn" value="PLACE YOUR ORDER" />
+        <input type="reset" class="finalBtn" value="START OVER" />
+      </div>
+
+      </form>
+    </div>
+
+    <script src="client\lib\angular.min.js"></script>
+    <script src="client\js\app.js"></script>
+  </body>
+</html>

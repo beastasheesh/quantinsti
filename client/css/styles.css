@@ -1,0 +1,56 @@
+body{
+  font-family: Helvetica;
+  margin: 0;
+}
+
+h1,h2,h3{
+  margin: 0;
+}
+
+#menu-bar{
+  background: crimson;
+  color: #fff;
+  padding: 10px;
+}
+
+#menu-bar h1{
+  font-size: 24px;
+  font-weight: normal;
+  display: inline-block;
+}
+
+.content{
+  padding: 20px;
+  overflow: hidden;
+}
+
+.content input{
+  float: none;
+  width: 40%;
+  padding: 10px 5%;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  margin: 10px 0;
+}
+
+.finalButtons{
+  width: 100%;
+  display: inline-block;
+}
+
+.finalBtn{
+  width: 20%;
+  display: inline-block;
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #777;
+  border: 1;
+  box-shadow: 2px 2px 2px rgba(20,20,20,0.1);
+  font-size: 16px;
+}
+
+li{
+  list-style-type: none;
+}
