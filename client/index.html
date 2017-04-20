@@ -29,6 +29,7 @@
         <fieldset>
           <legend>Choose Toppings</legend>
           <div>
+            <span style="color: red;" ng-show="requiredToppings" ng-cloak>*Required</span>
             <li ng-repeat="(key, value) in toppings">
               <input type="checkbox" ng-disabled="tickedToppings>=3 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)"/>{{key}} {{value | currency:"₹"}}<br>
             </li>
@@ -39,18 +40,24 @@
       <div>
         <fieldset>
           <legend>Choose Veggies</legend>
-          <li ng-repeat="(key, value) in veggies">
-            <input type="checkbox" ng-disabled="tickedVeggies>=5 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
-          </li>
+          <div>
+            <span style="color: red;" ng-show="requiredVeggies" ng-cloak>*Required</span>
+            <li ng-repeat="(key, value) in veggies">
+              <input type="checkbox" ng-disabled="tickedVeggies>=5 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
+            </li>
+          </div>
         </fieldset>
       </div>
 
       <div>
         <fieldset>
           <legend>Cheese</legend>
-          <li ng-repeat="(key, value) in cheese">
-            <input type="checkbox" ng-disabled="tickedCheese>=1 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
-          </li>
+          <div>
+            <span style="color: red;" ng-show="requiredCheese" ng-cloak>*Required</span>
+            <li ng-repeat="(key, value) in cheese">
+              <input type="checkbox" ng-disabled="tickedCheese>=1 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
+            </li>
+          </div>
         </fieldset>
       </div>
 
@@ -84,7 +91,7 @@
       </div>
 
       <div class="finalButtons">
-        <input type="submit" class="finalBtn" value="PLACE YOUR ORDER" />
+        <input type="submit" class="finalBtn" ng-model="submitOrder" ng-disabled="requiredToppings != false && requiredVeggies != false && requiredCheese != false" value="PLACE YOUR ORDER" />
         <input type="reset" class="finalBtn" value="START OVER" />
       </div>
 

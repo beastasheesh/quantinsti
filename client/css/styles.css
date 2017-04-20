@@ -54,3 +54,7 @@ h1,h2,h3{
 li{
   list-style-type: none;
 }
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}

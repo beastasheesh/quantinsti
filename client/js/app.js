@@ -7,37 +7,26 @@ app.controller('mainController', ['$scope', function($scope){
   $scope.tickedCheese = 0;
   $scope.cart = [];
   $scope.total = 0;
-  $scope.thin = 350;
-  $scope.normal = 300;
 
-  $scope.maxSelected = function(checked, key){
-    if(checked){
-      $scope.data.push(key);
-      return $scope.data.length;
-    }
-  };
+  var crustCnt = 0;
+  var previousVal = 0;
 
   $scope.updatePriceCrust = function(value){
-
-    if(value == $scope.thin){
-      $scope.normal = 0;
-      $scope.total += $scope.thin;
-    }else if(value == $scope.normal){
-      $scope.thin = 0;
-      $scope.total += $scope.normal;
-    }
-
-    /*if($scope.totalCrust != value && $scope.totalCrust != 0){
-      if($scope.totalCrust > value){
-        $scope.total = $scope.total + $scope.totalCrust - value;
-        $scope.totalCrust = value;
-      }else{
-        $scope.total = $scope.total + value - $scope.totalCrust;
-      }
-    }else if($scope.totalCrust == 0){
+    if(crustCnt == 0){
       $scope.total = $scope.total + value;
-      $scope.totalCrust = value;
-    }*/
+      crustCnt++;
+    } else{
+      if(previousVal != value) $scope.total = $scope.total + value - previousVal;
+    }
+    previousVal = value;
+  };
+
+  var requiredFunc = function(ticked){
+    if(ticked == 0){
+      return true;
+    } else {
+      return false;
+    }
   };
 
   $scope.updatePrice = function(key, value, bool){
@@ -45,24 +34,27 @@ app.controller('mainController', ['$scope', function($scope){
     if(Object.keys($scope.toppings).indexOf(key) != -1){
       if(bool) $scope.tickedToppings++;
       else $scope.tickedToppings--;
+      $scope.requiredToppings = requiredFunc($scope.tickedToppings);
     }
 
     if(Object.keys($scope.veggies).indexOf(key) != -1){
       if(bool) $scope.tickedVeggies++;
       else $scope.tickedVeggies--;
+      $scope.requiredVeggies = requiredFunc($scope.tickedVeggies);
     }
 
     if(Object.keys($scope.cheese).indexOf(key) != -1){
       if(bool) $scope.tickedCheese++;
       else $scope.tickedCheese--;
+      $scope.requiredCheese = requiredFunc($scope.tickedCheese);
     }
 
     if(bool == true){
       $scope.total = $scope.total + value;
-      $scope.cart.push(key, value);
+      $scope.cart.push(key + ' ' +value);
     } else if(bool == false){
       $scope.total = $scope.total - value;
-      $scope.cart.splice($scope.cart.indexOf(key), 2);
+      $scope.cart.splice($scope.cart.indexOf(key), 1);
     }
     console.log($scope.cart);
   };
