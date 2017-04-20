@@ -5,6 +5,7 @@ app.controller('mainController', ['$scope', function($scope){
   $scope.tickedToppings = 0;
   $scope.tickedVeggies = 0;
   $scope.tickedCheese = 0;
+  $scope.tickedSauces = 0;
   $scope.cart = [];
   $scope.total = 0;
 
@@ -22,7 +23,7 @@ app.controller('mainController', ['$scope', function($scope){
   };
 
   var requiredFunc = function(ticked){
-    if(ticked == 0){
+    if(ticked > 0){
       return true;
     } else {
       return false;
@@ -49,6 +50,12 @@ app.controller('mainController', ['$scope', function($scope){
       $scope.requiredCheese = requiredFunc($scope.tickedCheese);
     }
 
+    if(Object.keys($scope.sauces).indexOf(key) != -1){
+      if(bool) $scope.tickedSauces++;
+      else $scope.tickedSauces--;
+      $scope.requiredSauces = requiredFunc($scope.tickedSauces);
+    }
+
     if(bool == true){
       $scope.total = $scope.total + value;
       $scope.cart.push(key + ' ' +value);
@@ -58,6 +65,10 @@ app.controller('mainController', ['$scope', function($scope){
     }
     console.log($scope.cart);
   };
+
+  $scope.reloadRoute = function() {
+    $route.reload();
+  }
 
   $scope.base = {
     "Thin": 350,
@@ -114,5 +125,8 @@ app.controller('mainController', ['$scope', function($scope){
     "Garlic Parmesan Sauce": 25,
     "Honey Chipotle Sauce": 25
   }
+
+
+  $scope.updatePriceCrust($scope.base["Thin"]);
 
 }]);

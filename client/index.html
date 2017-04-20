@@ -11,17 +11,26 @@
 
     <div class="content" ng-controller="mainController">
       <form method="get" name="forms" action="/client/cart.html">
-      <div>
-        Your Price<t></t><input name="price" readonly="readonly" value="{{total}}"/>
+      <div class="priceDiv">
+        <div id="priceText">
+          Your Total:
+        </div>
+        <div id="price">
+          <input name="price" readonly="readonly" value="{{total | currency:'₹'}}"/>
+        </div>
+
       </div>
 
       <div>
         <fieldset>
           <legend>Pizza Crust</legend>
+          <div>
+            <span class="requireValidation" ng-show="requiredBase" ng-cloak>*Required</span>
             <li ng-repeat="(key, value) in base">
-              <input type="radio" name="bases" ng-model="$parent.bases" ng-value="{{value}}"
+              <input type="radio" name="bases" ng-init="$index==0?($parent.bases=value):''" ng-model="$parent.bases" ng-value="{{value}}"
                 ng-click="updatePriceCrust(value)" />{{key}} {{value | currency:"₹"}}<br>
             </li>
+          </div>
         </fieldset>
       </div>
 
@@ -29,7 +38,7 @@
         <fieldset>
           <legend>Choose Toppings</legend>
           <div>
-            <span style="color: red;" ng-show="requiredToppings" ng-cloak>*Required</span>
+            <span class="requireValidation" ng-hide="requiredToppings" ng-cloak>*Required</span>
             <li ng-repeat="(key, value) in toppings">
               <input type="checkbox" ng-disabled="tickedToppings>=3 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)"/>{{key}} {{value | currency:"₹"}}<br>
             </li>
@@ -41,7 +50,7 @@
         <fieldset>
           <legend>Choose Veggies</legend>
           <div>
-            <span style="color: red;" ng-show="requiredVeggies" ng-cloak>*Required</span>
+            <span class="requireValidation" ng-hide="requiredVeggies" ng-cloak>*Required</span>
             <li ng-repeat="(key, value) in veggies">
               <input type="checkbox" ng-disabled="tickedVeggies>=5 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
             </li>
@@ -53,7 +62,7 @@
         <fieldset>
           <legend>Cheese</legend>
           <div>
-            <span style="color: red;" ng-show="requiredCheese" ng-cloak>*Required</span>
+            <span class="requireValidation" ng-hide="requiredCheese" ng-cloak>*Required</span>
             <li ng-repeat="(key, value) in cheese">
               <input type="checkbox" ng-disabled="tickedCheese>=1 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
             </li>
@@ -64,9 +73,12 @@
       <div>
         <fieldset>
           <legend>Sauces</legend>
-          <li ng-repeat="(key, value) in sauces">
-            <input type="checkbox" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
-          </li>
+          <div>
+            <span class="requireValidation" ng-hide="requiredSauces" ng-cloak>*Required</span>
+            <li ng-repeat="(key, value) in sauces">
+              <input type="checkbox" ng-disabled="tickedSauces>=3 && !checked" ng-model="checked" ng-click="updatePrice(key, value, checked)" />{{key}} {{value | currency:"₹"}}<br>
+            </li>
+          </div>
         </fieldset>
       </div>
 
@@ -91,8 +103,10 @@
       </div>
 
       <div class="finalButtons">
-        <input type="submit" class="finalBtn" ng-model="submitOrder" ng-disabled="requiredToppings != false && requiredVeggies != false && requiredCheese != false" value="PLACE YOUR ORDER" />
-        <input type="reset" class="finalBtn" value="START OVER" />
+        <input type="submit" class="finalBtn" ng-model="submitOrder"
+          ng-disabled="!(requiredToppings == true && requiredVeggies == true && requiredCheese == true && requiredSauces == true)"
+            value="PLACE YOUR ORDER" />
+        <input type="reset" class="finalBtn" onClick="window.location.reload()" value="START OVER" />
       </div>
 
       </form>

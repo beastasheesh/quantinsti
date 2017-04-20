@@ -58,3 +58,26 @@ li{
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
 }
+
+.requireValidation {
+  color: red;
+  position: absolute;
+}
+
+.priceDiv {
+  width:400px;
+  display:table;
+  border-spacing:4px;
+}
+
+#priceText{
+  text-align:center;
+  width:50%;
+  display:table-cell;
+}
+
+#price{
+  text-align:center;
+  width:50%;
+  display:table-cell;
+}
